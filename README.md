@@ -9,6 +9,7 @@
 **`A`** - move left   
 **`D`** - move right   
 
+---------------------------------------------------
 
 **`Keys`** - for "so_long-with-shooting-skill"
 
