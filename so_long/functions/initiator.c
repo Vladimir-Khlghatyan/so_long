@@ -20,11 +20,11 @@ void	initiator(t_long *sl)
 
 void	initiator1(t_long *sl)
 {
+	sl->win = NULL;
+	sl->map = NULL;
 	sl->mlx = mlx_init();
 	if (!sl->mlx)
 		showerror("MLX was not initialized!\n", sl);
-	sl->win = NULL;
-	sl->map = NULL;
 	sl->wxpm = 40;
 	sl->hxpm = 40;
 	sl->moves = 0;
