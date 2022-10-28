@@ -77,17 +77,15 @@ void	shoot_reset_map(t_long *sl)
 	int	x;
 	int	y;
 
-	y = 0;
-	while (y < sl->map_y)
+	y = -1;
+	while (++y < sl->map_y)
 	{
-		x = 0;
-		while (x < sl->map_x)
+		x = -1;
+		while (++x < sl->map_x)
 		{
 			if (sl->map[y][x] == 'V' || sl->map[y][x] == 'H' || \
 				sl->map[y][x] == 'D')
 				sl->map[y][x] = '0';
-			x++;
 		}
-		y++;
 	}
 }
