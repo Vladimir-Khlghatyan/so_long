@@ -20,16 +20,10 @@ void	map_name_check(char *map_path)
 	l = ft_strlen(map_path);
 	if (l < 4 || map_path[l - 4] != '.' || map_path[l - 3] != 'b' \
 		|| map_path[l - 2] != 'e' || map_path[l - 1] != 'r')
-	{
-		ft_putstr("Error: non valid name of map!\n");
-		exit(1);
-	}
+		exit(ft_putstr("Error: non valid name of map!\n"));
 	fd = open(map_path, O_RDONLY);
 	if (fd == -1)
-	{
-		ft_putstr("Error: the map file is unreadable!\n");
-		exit(1);
-	}
+		exit(ft_putstr("Error: the map file is unreadable!\n"));
 	else
 		close (fd);
 }
@@ -66,13 +60,10 @@ void	first_or_last_str(char *s, t_long *sl)
 
 	if (!s)
 		showerror("Error: non valid map!\n", sl);
-	i = 0;
-	while (s[i])
-	{
+	i = -1;
+	while (s[++i])
 		if (s[i] != '1')
 			showerror("Error: non valid map (first or last line)!\n", sl);
-		i++;
-	}
 }
 
 void	mid_str(char *s, t_long *sl)

@@ -12,116 +12,38 @@
 
 #include "../so_long.h"
 
-void	move_to_next_cell(t_long *sl, char c, int step)
+static void	ft_step(t_long *sl, int x_step, int y_step)
 {
-	if (c == 'x')
+	if (x_step * y_step == 0 && \
+		(x_step + y_step == -1 || x_step + y_step == 1))
 	{
-		sl->map[sl->pl_y][sl->pl_x + step] = 'P';
+		sl->map[sl->pl_y + y_step][sl->pl_x + x_step] = 'P';
 		sl->map[sl->pl_y][sl->pl_x] = '0';
-		sl->pl_x = sl->pl_x + step;
-	}
-	else if (c == 'y')
-	{
-		sl->map[sl->pl_y + step][sl->pl_x] = 'P';
-		sl->map[sl->pl_y][sl->pl_x] = '0';
-		sl->pl_y = sl->pl_y + step;
-	}
-	sl->moves++;
-	print_in_terminal(sl);
-}
-
-void	move_right(t_long *sl)
-{
-	if (sl->map[sl->pl_y][sl->pl_x + 1] == '0')
-		move_to_next_cell(sl, 'x', 1);
-	else if (sl->map[sl->pl_y][sl->pl_x + 1] == 'C')
-	{
-		sl->collected++;
-		move_to_next_cell(sl, 'x', 1);
-	}
-	else if (sl->map[sl->pl_y][sl->pl_x + 1] == 'E')
-	{
-		if (sl->collected == sl->coins)
-		{
-			move_to_next_cell(sl, 'x', 1);
-			showerror("\nYou won!\n", sl);
-		}
-	}
-	else if (sl->map[sl->pl_y][sl->pl_x + 1] == 'T')
-	{
-		move_to_next_cell(sl, 'x', 1);
-		showerror("\nYou lost!\n", sl);
+		sl->pl_x += x_step;
+		sl->pl_y += y_step;
+		sl->moves++;
+		print_in_terminal(sl);
 	}
 }
 
-void	move_left(t_long *sl)
+void	ft_move(t_long *sl, int x_step, int y_step)
 {
-	if (sl->map[sl->pl_y][sl->pl_x - 1] == '0')
-		move_to_next_cell(sl, 'x', -1);
-	else if (sl->map[sl->pl_y][sl->pl_x - 1] == 'C')
+	if (sl->map[sl->pl_y + y_step][sl->pl_x + x_step] == '0')
+		ft_step(sl, x_step, y_step);
+	else if (sl->map[sl->pl_y + y_step][sl->pl_x + x_step] == 'C')
 	{
+		ft_step(sl, x_step, y_step);
 		sl->collected++;
-		move_to_next_cell(sl, 'x', -1);
 	}
-	else if (sl->map[sl->pl_y][sl->pl_x - 1] == 'E')
+	else if (sl->map[sl->pl_y + y_step][sl->pl_x + x_step] == 'E' && \
+		sl->collected == sl->coins)
 	{
-		if (sl->collected == sl->coins)
-		{
-			move_to_next_cell(sl, 'x', -1);
-			showerror("\nYou won!\n", sl);
-		}
+		ft_step(sl, x_step, y_step);
+		showerror("\nYou won!\n", sl);
 	}
-	else if (sl->map[sl->pl_y][sl->pl_x - 1] == 'T')
+	else if (sl->map[sl->pl_y + y_step][sl->pl_x + x_step] == 'T')
 	{
-		move_to_next_cell(sl, 'x', -1);
-		showerror("\nYou lost!\n", sl);
-	}
-}
-
-void	move_up(t_long *sl)
-{
-	if (sl->map[sl->pl_y - 1][sl->pl_x] == '0')
-		move_to_next_cell(sl, 'y', -1);
-	else if (sl->map[sl->pl_y - 1][sl->pl_x] == 'C')
-	{
-		sl->collected++;
-		move_to_next_cell(sl, 'y', -1);
-	}
-	else if (sl->map[sl->pl_y - 1][sl->pl_x] == 'E')
-	{
-		if (sl->collected == sl->coins)
-		{
-			move_to_next_cell(sl, 'y', -1);
-			showerror("\nYou won!\n", sl);
-		}
-	}
-	else if (sl->map[sl->pl_y - 1][sl->pl_x] == 'T')
-	{
-		move_to_next_cell(sl, 'y', -1);
-		showerror("\nYou lost!\n", sl);
-	}
-}
-
-void	move_down(t_long *sl)
-{
-	if (sl->map[sl->pl_y + 1][sl->pl_x] == '0')
-		move_to_next_cell(sl, 'y', 1);
-	else if (sl->map[sl->pl_y + 1][sl->pl_x] == 'C')
-	{
-		sl->collected++;
-		move_to_next_cell(sl, 'y', 1);
-	}
-	else if (sl->map[sl->pl_y + 1][sl->pl_x] == 'E')
-	{
-		if (sl->collected == sl->coins)
-		{
-			move_to_next_cell(sl, 'y', 1);
-			showerror("\nYou won!\n", sl);
-		}
-	}
-	else if (sl->map[sl->pl_y + 1][sl->pl_x] == 'T')
-	{
-		move_to_next_cell(sl, 'y', 1);
+		ft_step(sl, x_step, y_step);
 		showerror("\nYou lost!\n", sl);
 	}
 }

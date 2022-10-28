@@ -12,13 +12,25 @@
 
 #include "../so_long.h"
 
+int	ft_strlen(const char *str)
+{
+	int	i;
+
+	if (!str)
+		return (0);
+	i = 0;
+	while (str[i])
+		i++;
+	return (i);
+}
+
 int	ft_putstr(char *str)
 {
 	write(1, str, ft_strlen(str));
 	return (1);
 }
 
-int	ft_numlen(int n)
+static int	ft_numlen(int n)
 {
 	int	len;
 
@@ -61,19 +73,15 @@ char	*ft_itoa(int n)
 	return (str);
 }
 
-void	ft_putchar(char c)
-{
-	write(1, &c, 1);
-}
-
 void	ft_putnmb(int n)
 {
 	unsigned int	x;
+	char			c;
 
 	x = 0;
 	if (n < 0)
 	{
-		ft_putchar('-');
+		write(1, "-", 1);
 		x = -n;
 	}
 	else
@@ -84,5 +92,8 @@ void	ft_putnmb(int n)
 		ft_putnmb(x % 10);
 	}
 	else
-		ft_putchar(x + '0');
+	{
+		c = x + '0';
+		write(1, &c, 1);
+	}
 }

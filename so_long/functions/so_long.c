@@ -29,13 +29,13 @@ int	key_hook(int keycode, t_long *sl)
 		exit(1);
 	}
 	if (keycode == KEY_D || keycode == RIGHT)
-		move_right(sl);
+		ft_move(sl, 1, 0);
 	if (keycode == KEY_A || keycode == LEFT)
-		move_left(sl);
+		ft_move(sl, -1, 0);
 	if (keycode == KEY_W || keycode == UP)
-		move_up(sl);
+		ft_move(sl, 0, -1);
 	if (keycode == KEY_S || keycode == DOWN)
-		move_down(sl);
+		ft_move(sl, 0, 1);
 	return (0);
 }
 
@@ -60,7 +60,8 @@ int	main(int ac, char **av)
 {
 	t_long	sl;
 
-	(void)ac;
+	if (ac != 2)
+		return (ft_putstr("Inwalid number of agruments!\n"));
 	initiator(&sl);
 	check_and_create_map(av[1], &sl);
 	create_window(&sl);

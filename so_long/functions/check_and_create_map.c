@@ -12,26 +12,16 @@
 
 #include "../so_long.h"
 
-int	check_and_create_map(char *map_path, t_long *sl)
-{
-	map_name_check(map_path);
-	create_map(map_path, sl);
-	map_values_check(sl);
-	map_p_e_c_check(sl);
-	map_rectangle_check(sl);
-	return (1);
-}
-
-void	player_position(t_long *sl)
+static void	player_position(t_long *sl)
 {
 	int	x;
 	int	y;
 
-	y = 0;
-	while (sl->map[y])
+	y = -1;
+	while (sl->map[++y])
 	{
-		x = 0;
-		while (sl->map[y][x])
+		x = -1;
+		while (sl->map[y][++x])
 		{
 			if (sl->map[y][x] == 'P')
 			{
@@ -39,13 +29,11 @@ void	player_position(t_long *sl)
 				sl->pl_y = y;
 				return ;
 			}
-			x++;
 		}
-		y++;
 	}
 }
 
-void	map_p_e_c_check(t_long *sl)
+static void	map_p_e_c_check(t_long *sl)
 {
 	char	*s;
 	int		i;
@@ -57,7 +45,7 @@ void	map_p_e_c_check(t_long *sl)
 	sl->coins = 0;
 	i = -1;
 	while (sl->map[++i])
-		s = ft_strjoin(s, sl->map[i]);
+		s = ft_strjoin_free(s, sl->map[i]);
 	i = -1;
 	while (s[++i])
 	{
@@ -74,7 +62,7 @@ void	map_p_e_c_check(t_long *sl)
 	player_position(sl);
 }
 
-void	map_rectangle_check(t_long *sl)
+static void	map_rectangle_check(t_long *sl)
 {
 	int	y;
 	int	i;
@@ -89,4 +77,13 @@ void	map_rectangle_check(t_long *sl)
 			showerror("Error: map is not rectangle!\n", sl);
 		i++;
 	}
+}
+
+void	check_and_create_map(char *map_path, t_long *sl)
+{
+	map_name_check(map_path);
+	create_map(map_path, sl);
+	map_values_check(sl);
+	map_p_e_c_check(sl);
+	map_rectangle_check(sl);
 }

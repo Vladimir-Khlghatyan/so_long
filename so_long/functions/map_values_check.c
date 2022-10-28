@@ -34,7 +34,7 @@ int	rows_in_map(char *map_path, t_long *sl)
 	return (y);
 }
 
-char	**clear_new_lines_from_end_of_strings(char **map)
+char	**clear_carriage_return_from_end_of_strings(char **map)
 {
 	int		i;
 	char	*str;
@@ -43,14 +43,14 @@ char	**clear_new_lines_from_end_of_strings(char **map)
 	i = -1;
 	str = NULL;
 	while (map[++i])
-		str = ft_strjoin(str, map[i]);
+		str = ft_strjoin_free(str, map[i]);
 	tabfree(map);
-	new_map = ft_split(str, '\n');
+	new_map = ft_split(str, '\r');
 	free(str);
 	return (new_map);
 }
 
-int	create_map(char *map_path, t_long *sl)
+void	create_map(char *map_path, t_long *sl)
 {
 	int		fd;
 	int		y;
@@ -66,10 +66,9 @@ int	create_map(char *map_path, t_long *sl)
 		sl->map[i] = get_next_line(fd);
 	close(fd);
 	sl->map[i] = NULL;
-	sl->map = clear_new_lines_from_end_of_strings(sl->map);
+	sl->map = clear_carriage_return_from_end_of_strings(sl->map);
 	sl->map_x = ft_strlen(sl->map[0]);
 	sl->map_y = maplen(sl->map);
-	return (0);
 }
 
 int	maplen(char **map)
@@ -94,7 +93,7 @@ void	map_values_check(t_long *sl)
 	y = maplen(sl->map);
 	i = -1;
 	while (sl->map[++i])
-		s = ft_strjoin(s, sl->map[i]);
+		s = ft_strjoin_free(s, sl->map[i]);
 	check_symbols(s, sl);
 	free(s);
 	i = -1;
