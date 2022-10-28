@@ -23,7 +23,6 @@ void	create_window(t_long *sl)
 	sl->win = mlx_new_window(sl->mlx, (sl->wxpm) * (sl->map_x), \
 		(sl->hxpm) * (sl->map_y), "So long!");
 	mlx_hook(sl->win, RED_CROSS, 0, ft_close, sl);
-	mlx_key_hook(sl->win, key_hook, sl);
 	ft_putstr("Coins: 0	Moves: 0");
 }
 
