@@ -12,66 +12,65 @@
 
 #include "../so_long.h"
 
-char	*upto_first_nl_or_0(char *str)
+static int	ft_str_len(char *str)
 {
-	char	*short_str;
-	int		i;
+	int	i;
 
 	i = 0;
-	if (!str[i])
-		return (NULL);
-	while (str[i] && str[i] != '\n')
+	if (!str)
+		return (0);
+	while (str[i])
 		i++;
-	short_str = (char *)malloc(sizeof(char) *(i + 2));
-	if (!short_str)
-		return (NULL);
-	i = 0;
-	while (str[i] && str[i] != '\n')
-	{
-		short_str[i] = str[i];
-		i++;
-	}
-	if (str[i] == '\n')
-	{
-		short_str[i] = '\n';
-		i++;
-	}
-	short_str[i] = '\0';
-	return (short_str);
+	return (i);
 }
 
-char	*after_nl(char *str)
+static char	*ft_add_char_to_buf(char *buf, char c)
 {
-	char	*short_str;
+	char	*new_buf;
 	int		i;
 
-	i = 0;
-	while (str[i] && str[i] != '\n')
-		i++;
-	if (!str[i])
+	if (!buf)
 	{
-		free(str);
+		buf = (char *)malloc(sizeof(char) * 2);
+		if (!buf)
+			return (NULL);
+		buf[0] = c;
+		buf[1] = '\0';
+		return (buf);
+	}
+	new_buf = (char *)malloc(sizeof(char) * (ft_str_len(buf) + 2));
+	if (!new_buf)
+	{
+		free(buf);
 		return (NULL);
 	}
-	short_str = (char *)malloc(sizeof(char) * (ft_strlen(str) - i + 1));
-	if (!short_str)
-		return (NULL);
-	short_str = ft_copy(short_str, str + i + 1);
-	free(str);
-	return (short_str);
+	i = -1;
+	while (buf[++i])
+		new_buf[i] = buf[i];
+	new_buf[i] = c;
+	new_buf[i + 1] = '\0';
+	free(buf);
+	return (new_buf);
 }
 
 char	*get_next_line(int fd)
 {
-	static char	*temp;
-	char		*line;
+	int		rd;
+	char	c;
+	char	*buffer;
 
-	if (fd < 0 || fd > 65535)
-		return (NULL);
-	temp = read_from_file(fd, temp);
-	if (!temp)
-		return (NULL);
-	line = upto_first_nl_or_0(temp);
-	temp = after_nl(temp);
-	return (line);
+	buffer = NULL;
+	while (1)
+	{
+		rd = read(fd, &c, 1);
+		if (rd <= 0 || c == '\n')
+			break ;
+		buffer = ft_add_char_to_buf(buffer, c);
+	}
+	if (!buffer && rd == 1)
+	{
+		buffer = (char *)malloc(sizeof(char));
+		buffer[0] = '\0';
+	}
+	return (buffer);
 }

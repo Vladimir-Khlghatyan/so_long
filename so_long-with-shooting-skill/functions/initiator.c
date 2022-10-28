@@ -12,13 +12,7 @@
 
 #include "../so_long.h"
 
-void	initiator(t_long *sl)
-{
-	initiator1(sl);
-	initiator2(sl);
-}
-
-void	initiator1(t_long *sl)
+static void	initiator1(t_long *sl)
 {
 	sl->win = NULL;
 	sl->map = NULL;
@@ -34,7 +28,7 @@ void	initiator1(t_long *sl)
 	sl->shoot_cnt = 0;
 }
 
-void	initiator2(t_long *sl)
+static void	initiator2(t_long *sl)
 {
 	sl->xpm[0] = mlx_xpm_file_to_image(sl->mlx, "./xpm/0.xpm", &sl->wxpm, \
 		&sl->hxpm);
@@ -60,4 +54,10 @@ void	initiator2(t_long *sl)
 		&sl->hxpm);
 	sl->xpm[11] = mlx_xpm_file_to_image(sl->mlx, "./xpm/d.xpm", &sl->wxpm, \
 		&sl->hxpm);
+}
+
+void	initiator(t_long *sl)
+{
+	initiator1(sl);
+	initiator2(sl);
 }

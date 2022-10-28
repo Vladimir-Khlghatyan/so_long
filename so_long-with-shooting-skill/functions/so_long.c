@@ -29,13 +29,13 @@ int	key_hook(int keycode, t_long *sl)
 		exit(1);
 	}
 	if (keycode == RIGHT)
-		move_right(sl);
+		ft_move(sl, 1, 0);
 	if (keycode == LEFT)
-		move_left(sl);
+		ft_move(sl, -1, 0);
 	if (keycode == UP)
-		move_up(sl);
+		ft_move(sl, 0, -1);
 	if (keycode == DOWN)
-		move_down(sl);
+		ft_move(sl, 0, 1);
 	if (keycode == KEY_W)
 		shoot_up(sl);
 	if (keycode == KEY_S)
