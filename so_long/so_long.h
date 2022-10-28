@@ -52,29 +52,17 @@ typedef struct s_long
 }				t_long;
 
 /* libft_utils_1.c */
+int		ft_strlen(const char *str);
 int		ft_putstr(char *str);
-int		ft_numlen(int n);
 char	*ft_itoa(int n);
-void	ft_putchar(char c);
 void	ft_putnmb(int n);
 
 /* libft_utils_2.c */
 char	**tabfree(char **tab);
-char	**malloccheck(char **tab);
-int		wordcount(const char *s, char c);
-int		wordlen(const char *s, char c);
 char	**ft_split(char const *s, char c);
-
-/* get_next_line_utils.c */
-int		ft_strlen(const char *str);
-char	*ft_strjoin(char *s1, char const *s2);
-char	*ft_strchr_upd(const char *s, int c);
-char	*ft_copy(char *s1, char *s2);
-char	*read_from_file(int fd, char *temp);
+char	*ft_strjoin_free(char *s1, char const *s2);
 
 /* get_next_line.c */
-char	*upto_first_nl_or_0(char *str);
-char	*after_nl(char *str);
 char	*get_next_line(int fd);
 
 /* map_name_and_lines_check.c */
@@ -86,35 +74,23 @@ void	mid_str(char *s, t_long *sl);
 
 /* map_values_check.c */
 int		rows_in_map(char *map_path, t_long *sl);
-char	**clear_new_lines_from_end_of_strings(char **map);
-int		create_map(char *map_path, t_long *sl);
+char	**clear_carriage_return_from_end_of_strings(char **map);
+void	create_map(char *map_path, t_long *sl);
 int		maplen(char **map);
 void	map_values_check(t_long *sl);
 
 /* check_and_create_map.c */
-int		check_and_create_map(char *map_path, t_long *sl);
-void	player_position(t_long *sl);
-void	map_p_e_c_check(t_long *sl);
-void	map_rectangle_check(t_long *sl);
+void	check_and_create_map(char *map_path, t_long *sl);
 
 /* createwindow.c */
-int		ft_close(t_long *sl);
-int		create_window(t_long *sl);
-int		imagecode(char c);
-int		load_xpm(t_long *sl);
-int		load_xpm_with_animation(t_long *sl);
+void	create_window(t_long *sl);
+void	load_xpm_with_animation(t_long *sl);
 
 /* initiator.c */
 void	initiator(t_long *sl);
-void	initiator1(t_long *sl);
-void	initiator2(t_long *sl);
 
 /* moves.c */
-void	move_to_next_cell(t_long *sl, char c, int step);
-void	move_right(t_long *sl);
-void	move_left(t_long *sl);
-void	move_up(t_long *sl);
-void	move_down(t_long *sl);
+void	ft_move(t_long *sl, int x_step, int y_step);
 
 /* so_long.c */
 void	print_in_terminal(t_long *sl);
