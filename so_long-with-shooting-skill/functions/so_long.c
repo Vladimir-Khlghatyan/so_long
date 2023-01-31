@@ -68,7 +68,8 @@ int	main(int ac, char **av)
 {
 	t_long	sl;
 
-	(void)ac;
+	if (ac != 2)
+		return (ft_putstr("Inwalid number of agruments!\n"));
 	initiator(&sl);
 	check_and_create_map(av[1], &sl);
 	create_window(&sl);
