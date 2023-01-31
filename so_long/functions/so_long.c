@@ -23,18 +23,18 @@ void	print_in_terminal(t_long *sl)
 
 int	key_hook(int keycode, t_long *sl)
 {
-	if (keycode == ESC)
+	if (keycode == KEY_ESC)
 	{
 		mlx_destroy_window(sl->mlx, sl->win);
 		exit(1);
 	}
-	if (keycode == KEY_D || keycode == RIGHT)
+	if (keycode == KEY_D || keycode == KEY_RIGHT)
 		ft_move(sl, 1, 0);
-	if (keycode == KEY_A || keycode == LEFT)
+	if (keycode == KEY_A || keycode == KEY_LEFT)
 		ft_move(sl, -1, 0);
-	if (keycode == KEY_W || keycode == UP)
+	if (keycode == KEY_W || keycode == KEY_UP)
 		ft_move(sl, 0, -1);
-	if (keycode == KEY_S || keycode == DOWN)
+	if (keycode == KEY_S || keycode == KEY_DOWN)
 		ft_move(sl, 0, 1);
 	return (0);
 }
@@ -43,7 +43,6 @@ int	so_long(t_long *sl)
 {
 	char	*line;
 
-	mlx_key_hook(sl->win, key_hook, sl);
 	load_xpm_with_animation(sl);
 	mlx_string_put(sl->mlx, sl->win, 45, 45, 0x000000, "Coins: ");
 	line = ft_itoa(sl->collected);
@@ -65,6 +64,7 @@ int	main(int ac, char **av)
 	initiator(&sl);
 	check_and_create_map(av[1], &sl);
 	create_window(&sl);
+	mlx_hook(sl.win, 2, 1L << 0, key_hook, &sl);
 	mlx_loop_hook(sl.mlx, so_long, &sl);
 	mlx_loop(sl.mlx);
 	tabfree(sl.map);

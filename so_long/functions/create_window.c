@@ -61,9 +61,9 @@ static void	load_xpm(t_long *sl)
 			i = imagecode(sl->map[y][x]);
 			if (i == 2 && sl->collected == sl->coins)
 				i = 3;
-			if (i == 5 && sl->loop_cnt % 40 <= 20)
+			if (i == 5 && sl->loop_cnt % 24 < 12)
 				i = 6;
-			if (i == 7 && sl->loop_cnt % 40 <= 20)
+			if (i == 7 && sl->loop_cnt % 12 < 6)
 				i = 8;
 			mlx_put_image_to_window(sl->mlx, sl->win, sl->xpm[i], x * sl->wxpm, \
 				y * sl->wxpm);
@@ -74,8 +74,8 @@ static void	load_xpm(t_long *sl)
 void	load_xpm_with_animation(t_long *sl)
 {
 	sl->loop_cnt++;
-	if (sl->loop_cnt == 40)
+	if (sl->loop_cnt == 24)
 		sl->loop_cnt = 0;
-	mlx_clear_window(sl->mlx, sl->win);
+	// mlx_clear_window(sl->mlx, sl->win);
 	load_xpm(sl);
 }
