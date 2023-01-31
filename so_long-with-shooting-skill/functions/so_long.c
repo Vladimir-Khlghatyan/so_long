@@ -23,18 +23,18 @@ void	print_in_terminal(t_long *sl)
 
 int	key_hook(int keycode, t_long *sl)
 {
-	if (keycode == ESC)
+	if (keycode == KEY_ESC)
 	{
 		mlx_destroy_window(sl->mlx, sl->win);
 		exit(1);
 	}
-	if (keycode == RIGHT)
+	if (keycode == KEY_RIGHT)
 		ft_move(sl, 1, 0);
-	if (keycode == LEFT)
+	if (keycode == KEY_LEFT)
 		ft_move(sl, -1, 0);
-	if (keycode == UP)
+	if (keycode == KEY_UP)
 		ft_move(sl, 0, -1);
-	if (keycode == DOWN)
+	if (keycode == KEY_DOWN)
 		ft_move(sl, 0, 1);
 	if (keycode == KEY_W)
 		shoot_up(sl);
@@ -83,7 +83,7 @@ void	reset_map(t_long *sl)
 	if (sl->shoot == 1)
 	{
 		sl->shoot_cnt++;
-		if (sl->shoot_cnt == 20)
+		if (sl->shoot_cnt == 2)
 		{
 			shoot_reset_map(sl);
 			sl->shoot = 0;
